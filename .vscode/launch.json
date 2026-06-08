@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run AI Code Assistant Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/ai-code-assistant"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/ai-code-assistant/out/**/*.js"
+      ],
+      "preLaunchTask": "npm: watch - ai-code-assistant"
+    }
+  ]
+}

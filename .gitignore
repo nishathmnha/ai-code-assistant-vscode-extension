@@ -1,0 +1,12 @@
+# Dependencies
+ai-code-assistant/node_modules/
+
+# Build output
+ai-code-assistant/out/
+
+# Packaged extension artifacts
+*.vsix
+
+# OS noise
+Thumbs.db
+.DS_Store

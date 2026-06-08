@@ -1,14 +1,15 @@
 import * as vscode from 'vscode';
+import { registerAskAICommand } from './commands/askAI';
+import { ChatPanel } from './webview/chatPanel';
 
 export function activate(context: vscode.ExtensionContext) {
-  const disposable = vscode.commands.registerCommand(
-    'aiCodeAssistant.askAI',
-    async () => {
-      vscode.window.showInformationMessage('AI Code Assistant is working.');
-    }
+  const chatPanel = new ChatPanel(context);
+
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(ChatPanel.viewType, chatPanel)
   );
 
-  context.subscriptions.push(disposable);
+  registerAskAICommand(context, chatPanel);
 }
 
 export function deactivate() {}

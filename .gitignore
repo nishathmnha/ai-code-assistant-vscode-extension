@@ -3,6 +3,7 @@ ai-code-assistant/node_modules/
 
 # Build output
 ai-code-assistant/out/
+ai-code-assistant/.vscode-test/
 
 # Packaged extension artifacts
 *.vsix

@@ -10,7 +10,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:aiCodeAssistant.askAI"
+    "onCommand:aiCodeAssistant.askAI",
+    "onView:aiCodeAssistant.chatView"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -19,7 +20,60 @@
         "command": "aiCodeAssistant.askAI",
         "title": "AI Code Assistant: Ask AI"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aiCodeAssistant",
+          "title": "AI Code Assistant",
+          "icon": "media/assistant.svg"
+        }
+      ]
+    },
+    "views": {
+      "aiCodeAssistant": [
+        {
+          "type": "webview",
+          "id": "aiCodeAssistant.chatView",
+          "name": "Assistant"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Code Assistant",
+      "properties": {
+        "aiCodeAssistant.provider": {
+          "type": "string",
+          "default": "openai",
+          "enum": [
+            "openai",
+            "groq",
+            "ollama",
+            "anthropic",
+            "google",
+            "deepseek",
+            "openrouter",
+            "custom"
+          ],
+          "description": "LLM provider used by AI Code Assistant."
+        },
+        "aiCodeAssistant.model": {
+          "type": "string",
+          "default": "gpt-4o-mini",
+          "description": "Model name used by the selected LLM provider."
+        },
+        "aiCodeAssistant.ollamaBaseUrl": {
+          "type": "string",
+          "default": "http://localhost:11434/v1",
+          "description": "OpenAI-compatible Ollama base URL."
+        },
+        "aiCodeAssistant.customBaseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Custom OpenAI-compatible provider base URL."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

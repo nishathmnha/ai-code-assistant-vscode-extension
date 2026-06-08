@@ -216,12 +216,29 @@ function getChatHtml() {
         box-sizing: border-box;
       }
 
+      :root {
+        --surface: var(--vscode-sideBar-background);
+        --surface-raised: var(--vscode-editorWidget-background);
+        --line: var(--vscode-editorGroup-border);
+        --muted: var(--vscode-descriptionForeground);
+        --accent: var(--vscode-button-background);
+        --accent-foreground: var(--vscode-button-foreground);
+      }
+
       body {
         margin: 0;
         color: var(--vscode-foreground);
         background: var(--vscode-editor-background);
         font-family: var(--vscode-font-family);
         font-size: var(--vscode-font-size);
+      }
+
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible {
+        outline: 1px solid var(--vscode-focusBorder);
+        outline-offset: 1px;
       }
 
       button,
@@ -240,10 +257,10 @@ function getChatHtml() {
       .sidebar {
         display: flex;
         width: 100%;
-        gap: 6px;
-        padding: 8px 10px;
-        background: var(--vscode-sideBar-background);
-        border-bottom: 1px solid var(--vscode-sideBar-border);
+        gap: 3px;
+        padding: 7px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--line);
       }
 
       .brand {
@@ -252,16 +269,20 @@ function getChatHtml() {
 
       .nav-button {
         flex: 1;
-        padding: 6px 8px;
+        padding: 7px 8px;
         color: var(--vscode-sideBar-foreground);
         background: transparent;
         border: 1px solid transparent;
-        border-radius: 4px;
+        border-radius: 5px;
         text-align: center;
         cursor: pointer;
+        transition: background 120ms ease, color 120ms ease;
       }
 
-      .nav-button:hover,
+      .nav-button:hover {
+        background: var(--vscode-list-hoverBackground);
+      }
+
       .nav-button.active {
         color: var(--vscode-list-activeSelectionForeground);
         background: var(--vscode-list-activeSelectionBackground);
@@ -275,21 +296,59 @@ function getChatHtml() {
       }
 
       .topbar {
-        display: grid;
-        gap: 4px;
-        padding: 10px 12px;
-        border-bottom: 1px solid var(--vscode-editorGroup-border);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 13px 12px 11px;
+        border-bottom: 1px solid var(--line);
       }
 
       .title {
         margin: 0;
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: 650;
+        line-height: 1.3;
       }
 
       .meta {
-        color: var(--vscode-descriptionForeground);
+        color: var(--muted);
         font-size: 12px;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        gap: 6px;
+        margin-top: 5px;
+        padding: 3px 7px;
+        color: var(--muted);
+        background: var(--surface-raised);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 11px;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 auto;
+        background: var(--vscode-testing-iconPassed);
+        border-radius: 50%;
+      }
+
+      .context-badge {
+        flex: 0 1 auto;
+        max-width: 42%;
+        padding: 4px 7px;
+        color: var(--muted);
+        background: var(--surface-raised);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .view {
@@ -306,7 +365,7 @@ function getChatHtml() {
 
       .stack {
         display: grid;
-        gap: 12px;
+        gap: 10px;
         max-width: 760px;
       }
 
@@ -328,13 +387,19 @@ function getChatHtml() {
         color: var(--vscode-input-foreground);
         background: var(--vscode-input-background);
         border: 1px solid var(--vscode-input-border);
-        border-radius: 4px;
-        padding: 8px;
+        border-radius: 5px;
+        padding: 8px 9px;
       }
 
       textarea {
-        min-height: 88px;
+        min-height: 92px;
+        border: 0;
+        background: transparent;
         resize: vertical;
+      }
+
+      textarea:focus-visible {
+        outline: 0;
       }
 
       .button-row {
@@ -350,10 +415,12 @@ function getChatHtml() {
 
       .primary-button,
       .secondary-button {
-        border: 0;
-        border-radius: 4px;
-        padding: 8px 12px;
+        min-height: 30px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        padding: 7px 11px;
         cursor: pointer;
+        transition: background 120ms ease;
       }
 
       .primary-button {
@@ -368,6 +435,7 @@ function getChatHtml() {
       .secondary-button {
         color: var(--vscode-button-secondaryForeground);
         background: var(--vscode-button-secondaryBackground);
+        border-color: var(--line);
       }
 
       .secondary-button:hover {
@@ -375,7 +443,8 @@ function getChatHtml() {
       }
 
       .panel {
-        border: 1px solid var(--vscode-editorGroup-border);
+        background: var(--surface-raised);
+        border: 1px solid var(--line);
         border-radius: 6px;
         padding: 12px;
       }
@@ -383,25 +452,101 @@ function getChatHtml() {
       .messages {
         display: grid;
         gap: 10px;
-        min-height: 120px;
+        min-height: 154px;
+        align-content: start;
       }
 
       .message {
+        padding: 9px 10px;
+        background: var(--surface-raised);
+        border: 1px solid var(--line);
+        border-radius: 6px;
         white-space: pre-wrap;
         line-height: 1.5;
       }
 
+      .message.user {
+        border-left: 2px solid var(--accent);
+      }
+
       .message-role {
-        margin-bottom: 4px;
-        color: var(--vscode-descriptionForeground);
-        font-size: 12px;
+        margin-bottom: 5px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .empty-state {
+        display: grid;
+        min-height: 130px;
+        place-content: center;
+        gap: 7px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .empty-mark {
+        width: 32px;
+        height: 32px;
+        margin: 0 auto;
+        color: var(--accent-foreground);
+        background: var(--accent);
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .empty-title {
+        color: var(--vscode-foreground);
+        font-weight: 600;
+      }
+
+      .composer {
+        overflow: hidden;
+        background: var(--vscode-input-background);
+        border: 1px solid var(--vscode-input-border);
+        border-radius: 6px;
+      }
+
+      .composer-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 7px;
+        border-top: 1px solid var(--line);
+      }
+
+      .composer-actions .primary-button {
+        min-width: 72px;
+        flex: 0;
+      }
+
+      .section-heading {
+        margin: 2px 0 1px;
+        font-size: 13px;
         font-weight: 600;
       }
 
       .status-line {
-        color: var(--vscode-descriptionForeground);
-        line-height: 1.5;
-        white-space: pre-wrap;
+        display: grid;
+        gap: 8px;
+        color: var(--muted);
+      }
+
+      .status-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .status-value {
+        color: var(--vscode-foreground);
+        overflow: hidden;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     </style>
   </head>
@@ -417,30 +562,40 @@ function getChatHtml() {
         <header class="topbar">
           <div>
             <h1 class="title">AI Code Assistant</h1>
-            <div class="meta" id="providerSummary">Provider loading...</div>
+            <div class="status-badge">
+              <span class="status-dot"></span>
+              <span id="providerSummary">Provider loading...</span>
+            </div>
           </div>
-          <div class="meta" id="contextSummary">No editor context</div>
+          <div class="context-badge" id="contextSummary">No active editor</div>
         </header>
 
         <section class="view active" id="chatView">
           <div class="stack">
             <div class="panel">
-              <div class="messages" id="messages"></div>
+              <div class="messages" id="messages">
+                <div class="empty-state" id="emptyState">
+                  <div class="empty-mark">AI</div>
+                  <div class="empty-title">Ready when you are</div>
+                </div>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="prompt">Prompt</label>
+            <div class="composer">
               <textarea id="prompt" placeholder="Ask about the selected code..."></textarea>
-            </div>
-
-            <div class="button-row">
-              <button class="primary-button" type="button" id="sendPrompt">Send</button>
+              <div class="composer-actions">
+                <button class="primary-button" type="button" id="sendPrompt">Send</button>
+              </div>
             </div>
           </div>
         </section>
 
         <section class="view" id="providersView">
           <div class="stack">
+            <div>
+              <h2 class="section-heading">Model configuration</h2>
+            </div>
+
             <div class="field">
               <label for="provider">Provider</label>
               <select id="provider"></select>
@@ -486,6 +641,7 @@ function getChatHtml() {
       const providerStatus = document.getElementById('providerStatus');
       const promptInput = document.getElementById('prompt');
       const messages = document.getElementById('messages');
+      const emptyState = document.getElementById('emptyState');
 
       document.querySelectorAll('[data-view]').forEach((button) => {
         button.addEventListener('click', () => {
@@ -535,6 +691,17 @@ function getChatHtml() {
       });
 
       document.getElementById('sendPrompt').addEventListener('click', () => {
+        sendPrompt();
+      });
+
+      promptInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+          event.preventDefault();
+          sendPrompt();
+        }
+      });
+
+      function sendPrompt() {
         const text = promptInput.value.trim();
 
         if (!text) {
@@ -548,7 +715,7 @@ function getChatHtml() {
           type: 'sendPrompt',
           text
         });
-      });
+      }
 
       window.addEventListener('message', (event) => {
         const message = event.data;
@@ -579,19 +746,20 @@ function getChatHtml() {
 
         if (state.editorContext) {
           const selectedLength = state.editorContext.selectedText.length;
-          contextSummary.textContent = selectedLength + ' selected chars, ' + state.editorContext.languageId;
+          contextSummary.textContent = selectedLength
+            ? selectedLength + ' selected · ' + state.editorContext.languageId
+            : state.editorContext.languageId;
+          contextSummary.title = state.editorContext.fileName;
         } else {
           contextSummary.textContent = 'No active editor';
+          contextSummary.title = '';
         }
 
         const keyStatus = state.apiKeyRequired
           ? state.hasApiKey ? 'API key saved' : 'API key not saved'
           : 'API key not required';
 
-        providerStatus.textContent =
-          'Current provider: ' + state.config.provider +
-          '\\nCurrent model: ' + state.config.model +
-          '\\n' + keyStatus;
+        renderProviderStatus(keyStatus);
       }
 
       function renderProviders() {
@@ -626,8 +794,10 @@ function getChatHtml() {
       }
 
       function addMessage(role, text) {
+        emptyState?.remove();
+
         const wrapper = document.createElement('div');
-        wrapper.className = 'message';
+        wrapper.className = 'message ' + role.toLowerCase();
 
         const label = document.createElement('div');
         label.className = 'message-role';
@@ -640,6 +810,31 @@ function getChatHtml() {
         wrapper.appendChild(content);
         messages.appendChild(wrapper);
         messages.scrollTop = messages.scrollHeight;
+      }
+
+      function renderProviderStatus(keyStatus) {
+        providerStatus.innerHTML = '';
+
+        [
+          ['Provider', state.config.provider],
+          ['Model', state.config.model],
+          ['Credentials', keyStatus]
+        ].forEach(([labelText, valueText]) => {
+          const row = document.createElement('div');
+          row.className = 'status-row';
+
+          const label = document.createElement('span');
+          label.textContent = labelText;
+
+          const value = document.createElement('span');
+          value.className = 'status-value';
+          value.textContent = valueText;
+          value.title = valueText;
+
+          row.appendChild(label);
+          row.appendChild(value);
+          providerStatus.appendChild(row);
+        });
       }
 
       vscode.postMessage({
